@@ -2,17 +2,15 @@ package com.daishuai.es.controller;
 
 import com.daishuai.es.config.RestElasticsearchApi;
 import com.daishuai.es.enums.EsAliases;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
-import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import java.util.Arrays;
 
 /**
  * @author Daishuai
@@ -28,16 +26,14 @@ public class DemoController {
 
 
     @GetMapping("/get")
-    public Object getIncident() {
-        BoolQueryBuilder boolQuery = boolQuery();
-        boolQuery.mustNot(termQuery("JLZT", "0"));
-        SearchSourceBuilder source = new SearchSourceBuilder()
-                .query(boolQuery);
-        SearchRequest request = new SearchRequest()
-                .indices(EsAliases.ZQXX.getIndex())
-                .types(EsAliases.ZQXX.getType())
-                .source(source);
-        SearchResponse searchResponse = restElasticsearchApi.getSearchResponse(request);
-        return searchResponse.getHits().getHits();
+    public Object getData(String clusterName, String id) {
+        EsAliases esAliases = this.getEsAliases(clusterName);
+        GetResponse response = restElasticsearchApi.getGetResponse(new GetRequest(esAliases.getIndex(), esAliases.getType(), id));
+        return response.getSource();
+    }
+
+    private EsAliases getEsAliases(String clusterName) {
+        EsAliases[] values = EsAliases.values();
+        return Arrays.stream(values).filter(value -> StringUtils.contains(value.getIndex(), clusterName)).findFirst().get();
     }
 }

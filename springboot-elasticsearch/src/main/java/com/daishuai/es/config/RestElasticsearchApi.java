@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.nio.entity.NStringEntity;
@@ -56,13 +57,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RestElasticsearchApi {
     @Autowired
-    private ElasticsearchApiBuilder elasticsearchApiBuilder;
-
+    ElasticsearchApiBuilder elasticsearchApiBuilder;
     @Autowired
-    private EsClientFactory esClientFactory;
-
+    EsClientFactory esClientFactory;
     @Value("${spring.elasticsearch.default-cluster:default}")
-    private String defaultDbName;
+    String defaultDbName;
+
+    @Value("${spring.elasticsearch.datasource.dynamic.enable:false}")
+    private boolean dynamic;
 
     @Autowired
     private BulkProcessor bulkProcessor;
@@ -197,8 +199,17 @@ public class RestElasticsearchApi {
 
     public GetResponse getGetResponse(GetRequest request) {
         GetResponse response = null;
+        String clusterName = defaultDbName;
+        if (dynamic) {
+            String index = request.index();
+            String[] strs = StringUtils.split(index, ":");
+            if (ArrayUtils.isNotEmpty(strs) && strs.length == 2) {
+                clusterName = strs[0];
+                request.index(strs[1]);
+            }
+        }
         try {
-            response = esClientFactory.getHightClient(defaultDbName).get(request);
+            response = esClientFactory.getHightClient(clusterName).get(request);
         } catch (IOException e) {
             log.info("获取数据出错：{}异常：{}", request, e);
         }
@@ -207,8 +218,19 @@ public class RestElasticsearchApi {
 
     public SearchResponse getSearchResponse(SearchRequest request) {
         SearchResponse response = null;
+        String clusterName = defaultDbName;
+        if (dynamic) {
+            String[] indices = request.indices();
+            if (indices.length == 1) {
+                String[] strs = StringUtils.split(indices[0], ":");
+                if (ArrayUtils.isNotEmpty(strs) && strs.length == 2) {
+                    clusterName = strs[0];
+                    request.indices(strs[1]);
+                }
+            }
+        }
         try {
-            RestHighLevelClient hightClient = esClientFactory.getHightClient(defaultDbName);
+            RestHighLevelClient hightClient = esClientFactory.getHightClient(clusterName);
             long l = System.currentTimeMillis();
             response = hightClient.search(request);
             long l1 = System.currentTimeMillis() - l;
@@ -292,7 +314,7 @@ public class RestElasticsearchApi {
     public SearchResponse getDateByIds(String index, String type, String[] ids) {
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder().query(QueryBuilders.idsQuery().addIds(ids))
                 .timeout(new TimeValue(60, TimeUnit.SECONDS));
-        return getSearchResponse(new SearchRequest(index, type).source(sourceBuilder));
+        return getSearchResponse(new SearchRequest(index).types(type).source(sourceBuilder));
     }
 
     public SearchResponse searchData(String index, String type, SearchSourceBuilder searchSource) {

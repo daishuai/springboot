@@ -10,12 +10,22 @@ public enum EsAliases {
     /**
      * 雇员
      */
-    EMPLOYEE("windows:megacorp", "employee", "雇员"),
+    EMPLOYEE_WINDOWS("windows:megacorp", "employee", "雇员"),
+
+    /**
+     * 雇员
+     */
+    EMPLOYEE_CENTOS("centos:megacorp", "employee", "雇员"),
 
     /**
      * 灾情信息
      */
-    ZQXX("quanguo:a_fire_zqxx","zqxx", "灾情信息");
+    ZQXX_QUANGUO("quanguo:a_fire_zqxx","zqxx", "灾情信息"),
+
+    /**
+     * 灾情信息
+     */
+    ZQXX_JIANGSU("jiangsu:a_fire_zqxx","zqxx", "灾情信息");
 
     EsAliases(String index, String type, String description) {
         this.index = index;

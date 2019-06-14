@@ -42,15 +42,15 @@ public class EmployeeController {
         return employeeService.findById(id);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/get/centos")
     public Object getAll() {
         BoolQueryBuilder boolQuery = boolQuery();
         boolQuery.must(termQuery("first_name", "jane"));
         SearchSourceBuilder source = new SearchSourceBuilder()
                 .query(boolQuery);
         SearchRequest request = new SearchRequest()
-                .indices(EsAliases.EMPLOYEE.getIndex(), "megacorp")
-                .types(EsAliases.EMPLOYEE.getType())
+                .indices(EsAliases.EMPLOYEE_CENTOS.getIndex(), "megacorp")
+                .types(EsAliases.EMPLOYEE_CENTOS.getType())
                 .source(source);
         List<Map<String, Object>> result = new ArrayList<>();
         SearchResponse searchResponse = restElasticsearchApi.getSearchResponse(request);

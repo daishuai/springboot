@@ -24,33 +24,56 @@ import java.lang.reflect.Method;
  * @date 2019/6/13 15:53
  */
 @Slf4j
-@Component
+//@Component
 @Aspect
 public class EsApiAspect {
 
-    @Value("${method-name:getGetResponse,getSearchResponse}")
+    @Autowired
+    private RestElasticsearchApi restElasticsearchApi;
+
+    /**
+     * 需要过拦截的方法名
+     */
+    @Value("${method-name:getGetResponse,getSearchResponse,getDataById,getDateByIds,searchData,pageDataByScroll,searchDataByScroll}")
     private String methodName;
 
     @Autowired
     private ElasticsearchApiBuilder builder;
 
-    @Pointcut(value = "execution(* com.daishuai.es.config.RestElasticsearchApi.* (..))")
+    /**
+     * 切点
+     */
+    @Pointcut(value = "execution(* com.daishuai.es.config.RestElasticsearchApi.*(..))")
     public void pointCut() {
+        throw new UnsupportedOperationException();
     }
 
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        RestElasticsearchApi restElasticsearchApi = null;
+        RestElasticsearchApi dynamicRestEsApi = null;
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        //方法参数
         Object[] args = joinPoint.getArgs();
         Method method = signature.getMethod();
-        String methodName = method.getName();
+        //方法名
+        String name = method.getName();
         String[] methodNames = StringUtils.split(this.methodName, ",");
-        log.info("method name :{}", methodName);
-        if (!StringUtils.equalsAny(methodName, methodNames) || ArrayUtils.isEmpty(args)) {
-            return joinPoint.proceed(args);
+        log.info("method name :{}", name);
+        if (!StringUtils.equalsAny(name, methodNames) || ArrayUtils.isEmpty(args)) {
+            return joinPoint.proceed();
         }
+
+        if (args[0] instanceof String) {
+            String index = (String) args[0];
+            String[] strs = StringUtils.split(index, ":");
+            if (ArrayUtils.isNotEmpty(strs) && strs.length == 2) {
+                args[0] = strs[1];
+                dynamicRestEsApi = builder.build(strs[0]);
+                return method.invoke(dynamicRestEsApi, args);
+            }
+        }
+
         for (int i = 0; i < args.length; i++) {
             Object param = args[i];
             if (param instanceof GetRequest) {
@@ -60,8 +83,8 @@ public class EsApiAspect {
                 if (ArrayUtils.isNotEmpty(strs) && strs.length == 2) {
                     request.index(strs[1]);
                     args[i] = request;
-                    restElasticsearchApi = builder.build(strs[0]);
-                    return method.invoke(restElasticsearchApi, args);
+                    dynamicRestEsApi = builder.build(strs[0]);
+                    return method.invoke(dynamicRestEsApi, args);
                 }
             }
             if (param instanceof SearchRequest) {
@@ -72,8 +95,8 @@ public class EsApiAspect {
                 if (ArrayUtils.isNotEmpty(strs) && strs.length == 2) {
                     request.indices(strs[1]);
                     args[i] = request;
-                    restElasticsearchApi = builder.build(strs[0]);
-                    return method.invoke(restElasticsearchApi, args);
+                    dynamicRestEsApi = builder.build(strs[0]);
+                    return method.invoke(dynamicRestEsApi, args);
                 }
             }
         }

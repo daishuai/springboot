@@ -1,7 +1,7 @@
 server:
   port: 9999
 virtual:
-  machine: 192.168.8.187
+  machine: 192.168.159.128
 spring:
   data: #ES配置  transport es 连接此为spring-data es的配置项
     elasticsearch:
@@ -14,16 +14,30 @@ spring:
           tcp:
             connect_timeout: 120s
   elasticsearch:  #ES配置 rest es 连接 此配置支持多数据源， 根据实际情况配置
-    default-cluster: my-cluster #(变动)
+    default-cluster: centos #(变动)
+    datasource:
+      dynamic:
+        enable: true
     clusters:
-      my-cluster: #第一数据源
-        #rest-nodes: ${virtual.machine}:9201,${virtual.machine}:9202,${virtual.machine}:9203 #(变动)
-        rest-nodes: 10.65.3.17:9200,10.65.3.18:9200,10.65.3.19:9200
+      centos: #第一数据源
+        rest-nodes: ${virtual.machine}:9201,${virtual.machine}:9202,${virtual.machine}:9203 #(变动)
         thread-num: 10
         connect-timeout: 5000
+        username: elastic
+        password: changeme
       quanguo:
         rest-nodes: 172.16.233.203:9200
         thread-num: 10
+        connect-timeout: 5000
         username: elastic
         password: elastickedacom
-
+      jiangsu:
+        rest-nodes: 10.65.3.17:9200,10.65.3.18:9200,10.65.3.19:9200
+        thread-num: 10
+        connect-timeout: 5000
+      windows:
+        rest-nodes: 192.168.8.28:9201,192.168.8.28:9202,192.168.8.28:9203
+        thread-num: 10
+        connect-timeout: 5000
+        username: elastic
+        password: 123456

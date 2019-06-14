@@ -39,4 +39,9 @@ public class EmployeeEntity {
      * 兴趣
      */
     private Set<String> interests;
+
+    /**
+     * 数据来源
+     */
+    private String datasource;
 }

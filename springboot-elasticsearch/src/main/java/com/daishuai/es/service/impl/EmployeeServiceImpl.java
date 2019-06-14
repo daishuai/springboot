@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public EmployeeEntity findById(String id) {
-        GetResponse getResponse = restElasticsearchApi.getDataById(EsAliases.EMPLOYEE.getIndex(), EsAliases.EMPLOYEE.getType(), id);
+        GetResponse getResponse = restElasticsearchApi.getDataById(EsAliases.EMPLOYEE_CENTOS.getIndex(), EsAliases.EMPLOYEE_CENTOS.getType(), id);
         String sourceAsString = getResponse.getSourceAsString();
         return JSON.parseObject(sourceAsString, EmployeeEntity.class);
     }
