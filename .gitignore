@@ -1,8 +1,11 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
+springboot.iml
+springboot-elasticsearch/springboot-elasticsearch.iml
 springboot-elasticsearch/src/test/
 springboot-elasticsearch/target/
 springboot-kafka/springboot-kafka.iml
+springboot-kafka/src/test
+springboot-kafka/target/
 springboot-redis/src/test/
 springboot-redis/target/
-springboot-kafka/target/
