@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * @author Daishuai
- * @description TODO
+ * @description 测试用例
  * @date 2019/6/12 13:33
  */
 @RestController
@@ -29,12 +30,16 @@ public class DemoController {
     @GetMapping("/get")
     public ResponseEntity getData(String clusterName, String id) {
         EsAliases esAliases = this.getEsAliases(clusterName);
+        if (esAliases == null) {
+            return ResponseEntity.error("集群索引不存在");
+        }
         GetResponse response = restElasticsearchApi.getGetResponse(new GetRequest(esAliases.getIndex(), esAliases.getType(), id));
         return ResponseEntity.success(response.getSource());
     }
 
     private EsAliases getEsAliases(String clusterName) {
         EsAliases[] values = EsAliases.values();
-        return Arrays.stream(values).filter(value -> StringUtils.contains(value.getIndex(), clusterName)).findFirst().get();
+        Optional<EsAliases> aliases = Arrays.stream(values).filter(value -> StringUtils.contains(value.getIndex(), clusterName)).findFirst();
+        return aliases.isPresent() ? aliases.get() : null;
     }
 }

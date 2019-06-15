@@ -2,7 +2,6 @@ package com.daishuai.es.controller;
 
 import com.daishuai.common.entity.ResponseEntity;
 import com.daishuai.es.config.RestElasticsearchApi;
-import com.daishuai.common.entity.EmployeeEntity;
 import com.daishuai.es.enums.EsAliases;
 import com.daishuai.es.service.EmployeeService;
 import org.elasticsearch.action.search.SearchRequest;

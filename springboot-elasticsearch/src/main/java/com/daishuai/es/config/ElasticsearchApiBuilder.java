@@ -23,7 +23,7 @@ public class ElasticsearchApiBuilder {
     private static Map<String, BulkProcessor> bulkProcessorMap = new HashMap<>();
 
     @Autowired
-    EsClientFactory esClientFactory;
+    private EsClientFactory esClientFactory;
 
     @Autowired
     private BulkProcessor.Listener listener;

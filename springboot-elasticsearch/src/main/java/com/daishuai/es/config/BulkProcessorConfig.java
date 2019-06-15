@@ -40,12 +40,9 @@ public class BulkProcessorConfig {
     @Value("${spring.elasticsearch.bulkProcessor.concurrentRequests:5}")
     private int concurrentRequests;
 
-    @Autowired
-    private BulkProcessor.Listener bulkProcessorListener;
-
     @Bean
     @ConditionalOnMissingBean
-    public BulkProcessor bulkProcessor(EsClientFactory esClientFactory) {
+    public BulkProcessor bulkProcessor(EsClientFactory esClientFactory, BulkProcessor.Listener bulkProcessorListener) {
         ThreadPool threadPool = new ThreadPool(Settings.EMPTY);
 
         final RestHighLevelClient hightClient = esClientFactory.getHightClient(defaultDbName);

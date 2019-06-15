@@ -57,11 +57,13 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RestElasticsearchApi {
     @Autowired
-    ElasticsearchApiBuilder elasticsearchApiBuilder;
+    private ElasticsearchApiBuilder elasticsearchApiBuilder;
+
     @Autowired
-    EsClientFactory esClientFactory;
+    private EsClientFactory esClientFactory;
+
     @Value("${spring.elasticsearch.default-cluster:default}")
-    String defaultDbName;
+    private String defaultDbName;
 
     @Value("${spring.elasticsearch.datasource.dynamic.enable:false}")
     private boolean dynamic;
@@ -69,7 +71,8 @@ public class RestElasticsearchApi {
     @Autowired
     private BulkProcessor bulkProcessor;
 
-    protected RestElasticsearchApi(){}
+    protected RestElasticsearchApi() {
+    }
 
     protected RestElasticsearchApi(EsClientFactory esClientFactory, String defaultDbName, BulkProcessor bulkProcessor) {
         this.bulkProcessor = bulkProcessor;
@@ -114,11 +117,7 @@ public class RestElasticsearchApi {
             return false;
         }
 
-        if (response.getStatusLine().getStatusCode() == 200) {
-            return true;
-        } else {
-            return false;
-        }
+        return response.getStatusLine().getStatusCode() == 200;
     }
 
 
@@ -132,11 +131,7 @@ public class RestElasticsearchApi {
             log.error("检测索引出错：{}", e);
             return false;
         }
-        if (response.getStatusLine().getStatusCode() == 200) {
-            return true;
-        } else {
-            return false;
-        }
+        return response.getStatusLine().getStatusCode() == 200;
     }
 
 
@@ -378,8 +373,6 @@ public class RestElasticsearchApi {
 
         bulkRequest.setRefreshPolicy(RefreshPolicy.IMMEDIATE);
         return getBulkResponse(bulkRequest);
-//        IdsQueryBuilder query = QueryBuilders.idsQuery().addIds(ids);
-//        return  deleteByQuery(index,type,query);
     }
 
     public Response deleteByQuery(String index, String type, QueryBuilder query) {
@@ -517,7 +510,6 @@ public class RestElasticsearchApi {
         SearchResponse searchResponse = this.getSearchResponse(request);
         SearchHit[] hits = searchResponse.getHits().getHits();
         String scrollId = searchResponse.getScrollId();
-        ;
 
         List<Map<String, Object>> result = new ArrayList();
         while (ArrayUtils.isNotEmpty(hits)) {
