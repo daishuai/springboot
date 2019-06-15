@@ -1,7 +1,7 @@
 package com.daishuai.kafka.producer;
 
 import com.alibaba.fastjson.JSON;
-import com.daishuai.kafka.entity.MessageEntity;
+import com.daishuai.common.entity.MessageEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;

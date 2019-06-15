@@ -1,5 +1,6 @@
 package com.daishuai.es.controller;
 
+import com.daishuai.common.entity.ResponseEntity;
 import com.daishuai.es.config.RestElasticsearchApi;
 import com.daishuai.es.enums.EsAliases;
 import org.apache.commons.lang3.StringUtils;
@@ -26,10 +27,10 @@ public class DemoController {
 
 
     @GetMapping("/get")
-    public Object getData(String clusterName, String id) {
+    public ResponseEntity getData(String clusterName, String id) {
         EsAliases esAliases = this.getEsAliases(clusterName);
         GetResponse response = restElasticsearchApi.getGetResponse(new GetRequest(esAliases.getIndex(), esAliases.getType(), id));
-        return response.getSource();
+        return ResponseEntity.success(response.getSource());
     }
 
     private EsAliases getEsAliases(String clusterName) {

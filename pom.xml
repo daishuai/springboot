@@ -12,6 +12,7 @@
         <module>springboot-elasticsearch</module>
         <module>springboot-redis</module>
         <module>springboot-kafka</module>
+        <module>springboot-common</module>
     </modules>
 
     <parent>
@@ -26,6 +27,7 @@
         <java.version>1.8</java.version>
         <fastjson.version>1.2.47</fastjson.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+        <project.version>1.0.0-SNAPSHOT</project.version>
     </properties>
 
     <dependencies>
@@ -58,6 +60,16 @@
         </dependency>
 
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.daishuai</groupId>
+                <artifactId>springboot-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

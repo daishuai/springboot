@@ -9,19 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>springboot-kafka</artifactId>
+    <artifactId>springboot-common</artifactId>
 
-    <dependencies>
-
-        <dependency>
-            <groupId>org.springframework.kafka</groupId>
-            <artifactId>spring-kafka</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.daishuai</groupId>
-            <artifactId>springboot-common</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

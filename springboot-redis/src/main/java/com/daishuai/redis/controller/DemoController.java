@@ -1,5 +1,6 @@
 package com.daishuai.redis.controller;
 
+import com.daishuai.common.entity.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,10 @@ public class DemoController {
     private StringRedisTemplate stringRedisTemplate;
 
     @GetMapping("/redis")
-    public Object redis() {
+    public ResponseEntity redis() {
         for (int i=0; i<5; i++) {
             stringRedisTemplate.opsForValue().set("key-" + i, UUID.randomUUID().toString().replace("-", ""));
         }
-        return null;
+        return ResponseEntity.success();
     }
 }

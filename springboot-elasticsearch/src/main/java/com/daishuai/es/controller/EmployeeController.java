@@ -1,12 +1,12 @@
 package com.daishuai.es.controller;
 
+import com.daishuai.common.entity.ResponseEntity;
 import com.daishuai.es.config.RestElasticsearchApi;
-import com.daishuai.es.entity.EmployeeEntity;
+import com.daishuai.common.entity.EmployeeEntity;
 import com.daishuai.es.enums.EsAliases;
 import com.daishuai.es.service.EmployeeService;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.Requests;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +38,12 @@ public class EmployeeController {
     private RestElasticsearchApi restElasticsearchApi;
 
     @GetMapping("/{id}")
-    public EmployeeEntity getEmployeeById(@PathVariable("id") String id) {
-        return employeeService.findById(id);
+    public ResponseEntity getEmployeeById(@PathVariable("id") String id) {
+        return ResponseEntity.success(employeeService.findById(id));
     }
 
     @GetMapping("/get/centos")
-    public Object getAll() {
+    public ResponseEntity getAll() {
         BoolQueryBuilder boolQuery = boolQuery();
         boolQuery.must(termQuery("first_name", "jane"));
         SearchSourceBuilder source = new SearchSourceBuilder()
@@ -55,6 +55,6 @@ public class EmployeeController {
         List<Map<String, Object>> result = new ArrayList<>();
         SearchResponse searchResponse = restElasticsearchApi.getSearchResponse(request);
         Arrays.stream(searchResponse.getHits().getHits()).forEach(searchHit -> result.add(searchHit.getSource()));
-        return result;
+        return ResponseEntity.success(result);
     }
 }

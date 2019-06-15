@@ -1,5 +1,6 @@
 package com.daishuai.kafka.controller;
 
+import com.daishuai.common.entity.ResponseEntity;
 import com.daishuai.kafka.producer.SimpleProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,10 @@ public class DemoController {
     private SimpleProducer simpleProducer;
 
     @GetMapping("/send")
-    public void sendMessage() {
+    public ResponseEntity sendMessage() {
 
         simpleProducer.send("topic1", "Hello Kafka, Welcome To Our World!");
+
+        return ResponseEntity.success();
     }
 }

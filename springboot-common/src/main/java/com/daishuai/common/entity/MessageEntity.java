@@ -1,4 +1,4 @@
-package com.daishuai.kafka.entity;
+package com.daishuai.common.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

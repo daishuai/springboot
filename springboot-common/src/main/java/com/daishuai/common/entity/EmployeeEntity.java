@@ -1,4 +1,4 @@
-package com.daishuai.es.entity;
+package com.daishuai.common.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;

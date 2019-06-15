@@ -1,6 +1,6 @@
 package com.daishuai.es.service;
 
-import com.daishuai.es.entity.EmployeeEntity;
+import com.daishuai.common.entity.EmployeeEntity;
 
 /**
  * @author Daishuai

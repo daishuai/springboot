@@ -2,7 +2,7 @@ package com.daishuai.es.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.daishuai.es.config.RestElasticsearchApi;
-import com.daishuai.es.entity.EmployeeEntity;
+import com.daishuai.common.entity.EmployeeEntity;
 import com.daishuai.es.enums.EsAliases;
 import com.daishuai.es.service.EmployeeService;
 import org.elasticsearch.action.get.GetResponse;
