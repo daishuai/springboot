@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @description 用户
  * @date 2019/6/26 10:13
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public interface WechatUserDao extends JpaRepository<WechatUser, String> {
     
     @Modifying
