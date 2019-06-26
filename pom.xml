@@ -13,6 +13,8 @@
         <module>springboot-redis</module>
         <module>springboot-kafka</module>
         <module>springboot-common</module>
+        <module>springboot-oracle12c</module>
+        <module>springboot-jpa</module>
     </modules>
 
     <parent>

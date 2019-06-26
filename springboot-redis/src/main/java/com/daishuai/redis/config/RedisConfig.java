@@ -1,5 +1,6 @@
 package com.daishuai.redis.config;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -8,5 +9,8 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019/6/15 21:01
  */
 @Configuration
+@EnableAutoConfiguration
 public class RedisConfig {
+
+
 }

@@ -1,0 +1,10 @@
+server:
+  port: 8099
+spring:
+  application:
+    name: springboot-jpa
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: c##keda
+    password: root
