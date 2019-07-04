@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springboot</artifactId>
+        <groupId>com.daishuai</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>springboot-file</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>file-service</module>
+        <module>file-api</module>
+        <module>file-index</module>
+        <module>file-base</module>
+    </modules>
+
+    <properties>
+        <springboot-file.version>1.0.0-SNAPSHOT</springboot-file.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.daishuai</groupId>
+                <artifactId>file-base</artifactId>
+                <version>${springboot-file.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.daishuai</groupId>
+                <artifactId>file-service</artifactId>
+                <version>${springboot-file.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.daishuai</groupId>
+                <artifactId>file-api</artifactId>
+                <version>${springboot-file.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

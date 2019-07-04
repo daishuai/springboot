@@ -15,6 +15,7 @@
         <module>springboot-common</module>
         <module>springboot-oracle12c</module>
         <module>springboot-jpa</module>
+        <module>springboot-file</module>
     </modules>
 
     <parent>
