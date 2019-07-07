@@ -16,6 +16,7 @@
         <module>springboot-oracle12c</module>
         <module>springboot-jpa</module>
         <module>springboot-file</module>
+        <module>springboot-weather</module>
     </modules>
 
     <parent>
