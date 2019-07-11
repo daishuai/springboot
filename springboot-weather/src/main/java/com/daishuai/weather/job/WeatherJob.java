@@ -34,7 +34,7 @@ public class WeatherJob {
     @Autowired
     private RestElasticsearchApi restElasticsearchApi;
     
-    @Scheduled(cron = "0 0/1 * * * ?")
+    //@Scheduled(cron = "0 0/1 * * * ?")
     public void acquireWeatherData() throws URISyntaxException, IOException {
         long start = System.currentTimeMillis();
         log.info(">>>>>>>>>>>>>>>>>>>开始爬取天气数据<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");

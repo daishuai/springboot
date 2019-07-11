@@ -2,7 +2,7 @@ server:
   port: 8897
 
 virtual:
-  machine: 192.168.159.130
+  machine: 192.168.159.131
 
 spring:
   application:
