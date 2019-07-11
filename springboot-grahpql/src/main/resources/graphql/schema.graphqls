@@ -1,0 +1,22 @@
+type Author {
+    uuid: String!
+    createdTime: String!
+    firstName: String!
+    lastName: String
+    books: [Book]
+}
+
+input BookInput {
+    title: String!
+    isbn: String!
+    pageCount: Int!
+    authorId: String!
+}
+
+type Book {
+    uuid: String!
+    title: String!
+    isbn: String!
+    pageCount: Int!
+    author: Author!
+}

@@ -1,0 +1,17 @@
+#查询入口
+type Query {
+    findAuthorById(authorId: String!): Author
+    findAllAuthors: [Author]!
+    countAuthors: Int!
+    findAllBooks: [Book]!
+    countBooks: Int!
+
+}
+
+type Mutation {
+    newAuthor(firstName: String!,lastName: String!): Author!
+    newBook(title: String!,isbn: String!,pageCount: Int!,authorId: String!): Book!
+    saveBook(bookInput: BookInput!): Book!
+    deleteBook(bookId: String!): Boolean
+    updateBookPageCount(pageCount: Int!,bookId: String!): Book!
+}

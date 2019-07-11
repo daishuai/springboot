@@ -1,0 +1,13 @@
+server:
+  port: 9996
+spring:
+  application:
+    name: springboot-graphql
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: c##keda
+    password: root
+  jpa:
+    show-sql: true
+    generate-ddl: false
