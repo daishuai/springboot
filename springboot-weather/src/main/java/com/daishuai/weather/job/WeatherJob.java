@@ -28,7 +28,7 @@ import java.util.UUID;
  * @date 2019/7/4 22:39
  */
 @Slf4j
-@Component
+//@Component
 public class WeatherJob {
     
     @Autowired
@@ -104,6 +104,6 @@ public class WeatherJob {
      */
     private void handle(String data) {
         String city = data.substring(data.indexOf("{"));
-        restElasticsearchApi.upsertToProcessor("keda", "weather", UUID.randomUUID().toString().replace("-", ""), city);
+        restElasticsearchApi.upsertToProcessor("springboot_weather", "weather", UUID.randomUUID().toString().replace("-", ""), city);
     }
 }

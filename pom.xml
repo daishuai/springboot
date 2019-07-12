@@ -17,6 +17,7 @@
         <module>springboot-jpa</module>
         <module>springboot-file</module>
         <module>springboot-weather</module>
+        <module>springboot-grahpql</module>
     </modules>
 
     <parent>
