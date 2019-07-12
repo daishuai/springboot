@@ -43,15 +43,14 @@ public class EarthquakeJob {
         log.info("每页显示{}条记录", pageSize);
         String substring = temp.substring(temp.indexOf("var lists =") + 11, temp.indexOf(",pt,myIcon,sContent,html='';"));
         this.handle(substring);
-        /*while (currentPage < totalPage) {
+        while (currentPage < totalPage) {
             currentPage++;
             temp = this.getEarthquakeData(currentPage);
             if (StringUtils.contains(temp, "var lists =")) {
                 substring = temp.substring(temp.indexOf("var lists =") + 11, temp.indexOf(",pt,myIcon,sContent,html='';"));
                 this.handle(substring);
-                //Thread.sleep(new Random().nextInt(500) + 500);
             }
-        }*/
+        }
         
     }
     
@@ -60,7 +59,7 @@ public class EarthquakeJob {
      * @return
      * @throws Exception
      */
-    private String getEarthquakeData(int currentPage) throws Exception {
+    private String getEarthquakeData(int currentPage) {
         String url = "https://www.cea.gov.cn/eportal/ui?pageId=366509&currentPage=%d";
         return HttpUtils.getGetResponse(url, currentPage);
     }
@@ -107,6 +106,7 @@ public class EarthquakeJob {
             earthquake.setTitle(title);
             earthquake.setContent(content);
             earthquake.setSendDate(date);
+            earthquake.setDatasource("中国地震网");
             log.info("标题：{}", title);
             log.info("内容：{}", content);
             log.info("发布时间：{}", sendDate);

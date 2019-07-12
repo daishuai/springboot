@@ -14,7 +14,7 @@ import java.text.ParseException;
 
 /**
  * @author Daishuai
- * @description TODO
+ * @description 爬取突发灾情任务
  * @date 2019/7/11 21:02
  */
 @Slf4j
@@ -26,18 +26,26 @@ public class IncidentJob {
     
     @Scheduled(fixedRate = 1000 * 60 * 60)
     public void getIncidentData() {
+        long start = System.currentTimeMillis();
+        log.info(">>>>>>>>>>>>>>>>>>>>>>>开始爬取突发灾情新闻<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         String url = "http://www.12379.cn/html/gzaq/fmytplz/index%s.shtml";
         String doc = HttpUtils.getGetResponse(url, "");
         boolean isContinue = this.handle(doc);
         int pageNo = 2;
-        /*while (isContinue) {
+        while (isContinue) {
             log.info("pageNo:{}", pageNo);
             doc = HttpUtils.getGetResponse(url, "_" + pageNo);
             isContinue = this.handle(doc);
             pageNo++;
-        }*/
+        }
+        log.info("爬取突出灾情新闻结束,耗时：{}", System.currentTimeMillis() - start);
     }
     
+    /**
+     * 处理爬取的数据
+     * @param data
+     * @return
+     */
     private boolean handle(String data) {
         String temp = data;
         int startIndex = temp.indexOf("<li><div class=\"tt\"><h2><a href=\"");
@@ -53,6 +61,10 @@ public class IncidentJob {
         return true;
     }
     
+    /**
+     * 获取突发灾情详情
+     * @param url
+     */
     private void getIncidentDetail(String url) {
         String prefix = "http://www.12379.cn%s";
         String doc = HttpUtils.getGetResponse(prefix, url);

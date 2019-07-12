@@ -23,7 +23,7 @@ import java.util.Scanner;
 public class HttpUtils {
     
     
-    public static String getGetResponse(String pattern, Object args) {
+    public static String getGetResponse(String pattern, Object ... args) {
         RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setSocketTimeout(60000)
                 .setConnectTimeout(60000)

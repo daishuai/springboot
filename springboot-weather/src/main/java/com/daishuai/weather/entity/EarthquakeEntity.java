@@ -63,4 +63,9 @@ public class EarthquakeEntity {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date sendDate;
     
+    /**
+     * 发布单位
+     */
+    private String datasource;
+    
 }
