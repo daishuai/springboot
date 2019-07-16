@@ -29,12 +29,12 @@ public class IncidentJob {
         long start = System.currentTimeMillis();
         log.info(">>>>>>>>>>>>>>>>>>>>>>>开始爬取突发灾情新闻<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
         String url = "http://www.12379.cn/html/gzaq/fmytplz/index%s.shtml";
-        String doc = HttpUtils.getGetResponse(url, "");
+        String doc = HttpUtils.getGetResponse(null, url, "");
         boolean isContinue = this.handle(doc);
         int pageNo = 2;
         while (isContinue) {
             log.info("pageNo:{}", pageNo);
-            doc = HttpUtils.getGetResponse(url, "_" + pageNo);
+            doc = HttpUtils.getGetResponse(null, url, "_" + pageNo);
             isContinue = this.handle(doc);
             pageNo++;
         }
@@ -67,7 +67,7 @@ public class IncidentJob {
      */
     private void getIncidentDetail(String url) {
         String prefix = "http://www.12379.cn%s";
-        String doc = HttpUtils.getGetResponse(prefix, url);
+        String doc = HttpUtils.getGetResponse(null, prefix, url);
         int index = doc.indexOf("<div class=\"content_title\">");
         if (index == -1) {
             log.info(String.format(prefix, url));

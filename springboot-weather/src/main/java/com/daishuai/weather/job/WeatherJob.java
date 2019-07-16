@@ -32,7 +32,7 @@ public class WeatherJob {
                     "101221601", "101012200", "101012100", "101012000", "101251301")) {
                 continue;
             }
-            String doc = HttpUtils.getGetResponse(url, code, System.currentTimeMillis());
+            String doc = HttpUtils.getGetResponse(null, url, code, System.currentTimeMillis());
             this.handle(doc);
         }
         log.info(">>>>>>>>>>>>>>>>>>>结束爬取天气数据，耗时：{}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", System.currentTimeMillis() - start);

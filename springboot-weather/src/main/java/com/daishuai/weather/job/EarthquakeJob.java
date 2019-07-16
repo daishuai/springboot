@@ -61,7 +61,7 @@ public class EarthquakeJob {
      */
     private String getEarthquakeData(int currentPage) {
         String url = "https://www.cea.gov.cn/eportal/ui?pageId=366509&currentPage=%d";
-        return HttpUtils.getGetResponse(url, currentPage);
+        return HttpUtils.getGetResponse(null, url, currentPage);
     }
     
     /**

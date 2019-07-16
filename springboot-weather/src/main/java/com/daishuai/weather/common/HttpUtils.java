@@ -1,6 +1,7 @@
 package com.daishuai.weather.common;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.MapUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -12,23 +13,24 @@ import org.apache.http.impl.client.HttpClients;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
  * @author Daishuai
- * @description TODO
+ * @description Http请求工具
  * @date 2019/7/11 21:44
  */
 @Slf4j
 public class HttpUtils {
     
+    private HttpUtils() {}
     
-    public static String getGetResponse(String pattern, Object ... args) {
+    public static String getGetResponse(Map<String, String> headers, String pattern, Object ... args) {
         RequestConfig defaultRequestConfig = RequestConfig.custom()
                 .setSocketTimeout(60000)
                 .setConnectTimeout(60000)
                 .setConnectionRequestTimeout(60000)
-                .setStaleConnectionCheckEnabled(true)
                 .build();
         //创建HttpClient对象
         CloseableHttpClient httpClient = HttpClients.custom()
@@ -36,18 +38,20 @@ public class HttpUtils {
                 .build();
         //创建并设置URI
         URIBuilder uri = null;
+        //创建GET请求
+        HttpGet httpGet = null;
         String url = String.format(pattern, args);
         try {
             uri = new URIBuilder(url);
+            httpGet = new HttpGet(uri.build());
         } catch (URISyntaxException e) {
             log.info("创建并设置URI出错:{},url:{}", e.getMessage(), url);
         }
-        //创建GET请求
-        HttpGet httpGet = null;
-        try {
-            httpGet = new HttpGet(uri.build());
-        } catch (URISyntaxException e) {
-            log.error("创建HttpGet请求出错：{}", e.getMessage());
+        if (httpGet == null) {
+            return null;
+        }
+        if (MapUtils.isNotEmpty(headers)) {
+        
         }
         httpGet.setHeader("Connection", "keep-alive");
         httpGet.setHeader("Pragma", "no-cache");
@@ -64,21 +68,22 @@ public class HttpUtils {
         } catch (IOException e) {
             log.error("请求出错：{}", e.getMessage());
         }
-    
+        if (httpResponse == null) {
+            return null;
+        }
         //获取请求结果
         HttpEntity entity = httpResponse.getEntity();
-        InputStream inputStream = null;
-        try {
-            inputStream = entity.getContent();
+        StringBuilder temp = new StringBuilder();
+        try(
+                InputStream inputStream = entity.getContent();
+                Scanner scanner = new Scanner(inputStream, "UTF-8")
+        ) {
+            while (scanner.hasNextLine()) {
+                temp.append(scanner.nextLine());
+            }
         } catch (IOException e) {
             log.error("获取请求结果出错：{}", e.getMessage());
         }
-        Scanner scanner = new Scanner(inputStream, "UTF-8");
-        StringBuilder temp = new StringBuilder();
-        while (scanner.hasNextLine()) {
-            temp.append(scanner.nextLine());
-        }
-        //log.info(temp.toString());
         try {
             httpClient.close();
             httpResponse.close();
