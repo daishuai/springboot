@@ -1,5 +1,9 @@
 server:
   port: 8090
+
+virtual:
+  machine: 192.168.159.132
+
 spring:
   jpa:
     show-sql: true
@@ -8,3 +12,25 @@ spring:
     url: jdbc:oracle:thin:@localhost:1521:orcl
     username: c##keda
     password: root
+  data: #ES配置  transport es 连接此为spring-data es的配置项
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-name: dev #(变动)
+      cluster-nodes: localhost:9300
+      properties:
+        transport:
+          tcp:
+            connect_timeout: 120s
+  elasticsearch:
+    default-cluster: centos
+    datasource:
+      dynamic:
+        enable: true
+    clusters:
+      centos: #第一数据源
+        rest-nodes: ${virtual.machine}:9201,${virtual.machine}:9202,${virtual.machine}:9203 #(变动)
+        thread-num: 10
+        connect-timeout: 5000
+        username: elastic
+        password: changeme

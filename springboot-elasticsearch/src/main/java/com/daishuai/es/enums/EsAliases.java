@@ -21,6 +21,10 @@ public enum EsAliases {
      * 灾情信息
      */
     ZQXX_QUANGUO("quanguo:a_fire_zqxx","zqxx", "灾情信息"),
+    
+    XFDW("a_fire_xfdw", "xfdw", "消防单位"),
+    
+    RYXX("a_fire_ryxx", "ryxx", "人员信息"),
 
     /**
      * 灾情信息
