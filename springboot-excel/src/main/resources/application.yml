@@ -1,8 +1,8 @@
 server:
-  port: 3000
+  port: 8090
 spring:
-  application:
-    name: springboot-jpa
+  jpa:
+    show-sql: true
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521:orcl

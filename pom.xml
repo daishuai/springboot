@@ -19,6 +19,7 @@
         <module>springboot-weather</module>
         <module>springboot-grahpql</module>
         <module>springboot-event</module>
+        <module>springboot-excel</module>
     </modules>
 
     <parent>
