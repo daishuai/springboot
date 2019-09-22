@@ -18,6 +18,7 @@
         <module>springboot-file</module>
         <module>springboot-weather</module>
         <module>springboot-grahpql</module>
+        <module>springboot-event</module>
     </modules>
 
     <parent>
