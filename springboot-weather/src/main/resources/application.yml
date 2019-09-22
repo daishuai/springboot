@@ -2,7 +2,7 @@ server:
   port: 8897
 
 virtual:
-  machine: 192.168.159.131
+  machine: 192.168.159.132
 
 spring:
   application:
@@ -17,7 +17,7 @@ spring:
         transport:
           tcp:
             connect_timeout: 120s
-  elasticsearch:  #ES配置 rest es 连接 此配置支持多数据源， 根据实际情况配置
+  elasticsearch:
     default-cluster: centos #(变动)
     datasource:
       dynamic:
