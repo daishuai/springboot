@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+import java.awt.Color;
 
 /**
  * @author Daishuai
@@ -132,7 +133,7 @@ public class ExcelService {
         //在sheet中添加表头第0行
         Row row = sheet.createRow(headRowIndex);
         
-        CellStyle style = this.createHeadStyle(workbook);
+        CellStyle style = this.createHeadStyle(workbook, (short) 13);
         
         Cell cell;
         for (int i = 0; i < columnNames.size(); i++) {
@@ -156,7 +157,8 @@ public class ExcelService {
     public int createComplexHead(SXSSFWorkbook workbook, Sheet sheet, List<String> columnNames, List<List> columnLocations) {
         int rowIndex = 0;
         Cell cell;
-        CellStyle headStyle = this.createHeadStyle(workbook);
+        XSSFColor backgroundColor = new XSSFColor(new Color(204, 255, 255));
+        CellStyle headStyle = this.createHeadStyle(workbook, backgroundColor.getIndex());
         for (int i = 0; i < columnNames.size(); i++) {
             List<Integer> locations = columnLocations.get(i);
             int firstRowIndex = locations.get(0);
@@ -248,20 +250,20 @@ public class ExcelService {
      * 列标题样式
      *
      * @param workbook
+     * @param backgroundColor 背景色
      * @return
      */
-    private CellStyle createHeadStyle(SXSSFWorkbook workbook) {
+    private CellStyle createHeadStyle(SXSSFWorkbook workbook, short backgroundColor) {
         //创建单元格，并设置值表头 设置表头居中
-        XSSFCellStyle style = (XSSFCellStyle) workbook.createCellStyle();
+        CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
         font.setBold(true);
         font.setFontHeightInPoints((short) 14);
         // 创建一个居中格式 自动换行
-        
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-        style.setFillForegroundColor(new XSSFColor(new java.awt.Color(204, 255, 255)));
+        style.setFillForegroundColor(backgroundColor);
         style.setFont(font);
         style.setBorderTop(BorderStyle.THIN);
         style.setBorderBottom(BorderStyle.THIN);
