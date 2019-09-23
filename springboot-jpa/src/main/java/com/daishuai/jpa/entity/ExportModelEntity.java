@@ -28,4 +28,6 @@ public class ExportModelEntity {
     private String columnField;
     
     private String description;
+    
+    private String complexColumnName;
 }

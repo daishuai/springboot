@@ -313,7 +313,7 @@ public class ExportService {
         public void run() {
             log.debug("=====================consumer start=================");
             sheet = workbook.createSheet(sheetName);
-            rowIndex = excelService.createHead(workbook, sheet, columnNames, 0);
+            rowIndex = excelService.createSimpleHead(workbook, sheet, columnNames, 0);
             while (true) {
                 SearchHit[] hits = queue.poll();
                 if (null == hits && !flag) {
@@ -325,7 +325,7 @@ public class ExportService {
                     if (rowIndex > 900000) {
                         total += rowIndex;
                         sheet = workbook.createSheet(sheetName + Math.ceil(total / 900000));
-                        rowIndex = excelService.createHead(workbook, sheet, columnNames, 0);
+                        rowIndex = excelService.createSimpleHead(workbook, sheet, columnNames, 0);
                     }
                     rowIndex = excelService.createData(workbook, sheet, columnFields, datas, rowIndex);
                     if (!isNotExistOrCancel(downloadId)) {
