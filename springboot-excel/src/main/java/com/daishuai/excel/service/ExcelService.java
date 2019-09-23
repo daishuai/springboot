@@ -37,11 +37,10 @@ public class ExcelService {
     private ExportModelDao exportModelDao;
     
     
-    public void commonExport(String sheetName, List<Map<String, Object>> datas, HttpServletResponse response) throws Exception {
+    public void commonExport(String sheetName, List<Map<String, Object>> datas, String title, HttpServletResponse response) throws Exception {
         
         ExportModelEntity exportModel = exportModelDao.findBySheetName(sheetName);
         
-        String title = exportModel.getTitle();
         String columnName = exportModel.getColumnName();
         String columnField = exportModel.getColumnField();
         String complexColumnName = exportModel.getComplexColumnName();
@@ -64,7 +63,7 @@ public class ExcelService {
         int rowIndex = 0;
         //创建标题
         if (StringUtils.isNotBlank(title)) {
-            //rowIndex = this.createTitle(workbook, sheet, title, rowIndex, fields.size());
+            rowIndex = this.createTitle(workbook, sheet, title, rowIndex, fields.size());
         }
         if (CollectionUtils.isNotEmpty(names)) {
             rowIndex = this.createSimpleHead(workbook, sheet, names, rowIndex);
@@ -74,7 +73,7 @@ public class ExcelService {
             rowIndex = this.createComplexHead(workbook, sheet, complexNames, locations);
         }
         
-        //rowIndex = this.createData(workbook, sheet, fields, datas, rowIndex);
+        rowIndex = this.createData(workbook, sheet, fields, datas, rowIndex);
         
         //输出Excel文件
         //FileOutputStream output = new FileOutputStream("d:\\workbook.xlsx");

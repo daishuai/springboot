@@ -95,7 +95,7 @@ public class ExcelController {
     
     @GetMapping("/test")
     public ResponseEntity testSheet(HttpServletResponse response) throws Exception {
-        excelService.commonExport("zqfx", null, response);
+        excelService.commonExport("zqfx", null, "灾情分析", response);
         return ResponseEntity.success();
     }
     
