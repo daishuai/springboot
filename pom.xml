@@ -20,6 +20,7 @@
         <module>springboot-grahpql</module>
         <module>springboot-event</module>
         <module>springboot-excel</module>
+        <module>springboot-demo</module>
     </modules>
 
     <parent>
