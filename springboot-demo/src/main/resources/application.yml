@@ -1,6 +1,16 @@
 server:
   port: 9999
+  ##两个不一样 接口前缀 context-path + servlet-path，静态资源前缀 context-path + servlet-path或者servlet-path，apache的WebSocket context-path
+  ##两个一样 接口前缀 context-path + servlet-path，静态资源前缀 context-path + servlet-path，apache的WebSocket context-path
+  context-path: /kircp
+  servlet-path: /kircp
 spring:
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,\
-      classpath:/static/,classpath:/public/,file:D://demo
+    static-locations: classpath:/META-INF/resources,classpath:/resources/,classpath:/static/,classpath:/public/,/,file:D://demo
+  mvc:
+    static-path-pattern: /resources/**
+
+demo:
+  property:
+    interval: 60
+

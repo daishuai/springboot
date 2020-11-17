@@ -11,5 +11,37 @@
 
     <artifactId>springboot-demo</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com</groupId><!--随便填的-->
+            <artifactId>ipaas-sdk</artifactId><!--jar包名字-->
+            <version>9.3.2</version><!--版本号-->
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/lib/ipaas-sdk-9.3.2.jar</systemPath><!--路径-->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--这里写上main方法所在类的路径-->
+                <configuration>
+                    <mainClass>com.daishuai.demo.DemoApplication</mainClass>
+                    <includeSystemScope>true</includeSystemScope><!--外部进行打包-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal><!---->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
 
 </project>
