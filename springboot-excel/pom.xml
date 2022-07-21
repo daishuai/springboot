@@ -31,12 +31,6 @@
 
         <dependency>
             <groupId>com.daishuai</groupId>
-            <artifactId>springboot-elasticsearch</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.daishuai</groupId>
             <artifactId>springboot-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -70,12 +64,6 @@
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
             <version>5.6.16</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>x-pack-transport</artifactId>
-            <version>5.6.1</version>
         </dependency>
 
         <dependency>
