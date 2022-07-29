@@ -1,28 +1,10 @@
 server:
   port: 9998
 
-virtual: 192.168.159.130
-
 spring:
   redis:
-#    cluster:
-#      nodes:
-#      - ${virtual}:6380
-#      - ${virtual}:6381
-#      - ${virtual}:6382
-    #host: ${virtual}
-    #port: 6380
-    database: 0
-    password: 1234
-    jedis:
-      pool:
-        max-active: 8
-        max-idle: 250
-        max-wait: 2000
-        min-idle: 0
-        minEvictableIdleTime: 30000
-        timeBetweenEviction: 30000
-    # 哨兵配置
+    port: 6379
+    password: 123456
     sentinel:
       master: mymaster
-      nodes: ${virtual}:26380,${virtual}:26381,${virtual}:26382
+      nodes: 192.168.8.100:26380,192.168.8.100:26381,192.168.8.100:26382
