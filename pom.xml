@@ -12,7 +12,6 @@
         <module>springboot-redis</module>
         <module>springboot-kafka</module>
         <module>springboot-common</module>
-        <module>springboot-jpa</module>
         <module>springboot-file</module>
         <module>springboot-grahpql</module>
         <module>springboot-event</module>
