@@ -15,8 +15,8 @@
         <module>springboot-file</module>
         <module>springboot-grahpql</module>
         <module>springboot-event</module>
-        <module>springboot-excel</module>
         <module>springboot-demo</module>
+        <module>springboot-es</module>
     </modules>
 
     <parent>
@@ -32,6 +32,7 @@
         <fastjson.version>1.2.47</fastjson.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <project.version>1.0.0-SNAPSHOT</project.version>
+        <elasticsearch.version>6.8.0</elasticsearch.version>
     </properties>
 
     <dependencies>
@@ -71,6 +72,30 @@
                 <groupId>com.daishuai</groupId>
                 <artifactId>springboot-common</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client-sniffer</artifactId>
+                <version>${elasticsearch.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -1,10 +1,13 @@
+wsl:
+  ubuntu22:
+    ip: 172.21.111.191
 server:
   port: 9987
 spring:
   application:
     name: springboot-kafka
   kafka:
-    bootstrap-servers: 192.168.159.128:9093,192.168.159.128:9094,192.168.159.128:9095
+    bootstrap-servers: ${wsl.ubuntu22.ip}:9092
     producer:
       retries: 0
       batch-size: 16384

@@ -1,0 +1,10 @@
+spring:
+  elasticsearch:
+    clusters:
+      default:
+        clusterName: default
+        restNodes: http://172.21.111.191:9200
+      local:
+        clusterName: local
+        restNodes: http://172.21.111.191:9200
+
