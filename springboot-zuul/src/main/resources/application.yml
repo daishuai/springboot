@@ -1,0 +1,8 @@
+zuul:
+  routes:
+    service-a:
+      path: /service-a/**
+      url: http://localhost:8090/service-a
+    service-b:
+      path: /service-b/**
+      url: http://localhost:8090/service-b

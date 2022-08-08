@@ -17,6 +17,7 @@
         <module>springboot-event</module>
         <module>springboot-demo</module>
         <module>springboot-es</module>
+        <module>springboot-zuul</module>
     </modules>
 
     <parent>
@@ -33,6 +34,7 @@
         <commons-lang3.version>3.7</commons-lang3.version>
         <project.version>1.0.0-SNAPSHOT</project.version>
         <elasticsearch.version>6.8.0</elasticsearch.version>
+        <spring.cloud-version>Edgware.SR5</spring.cloud-version>
     </properties>
 
     <dependencies>
@@ -68,6 +70,14 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud-version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>com.daishuai</groupId>
                 <artifactId>springboot-common</artifactId>
