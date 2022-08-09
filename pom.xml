@@ -18,6 +18,9 @@
         <module>springboot-demo</module>
         <module>springboot-es</module>
         <module>springboot-zuul</module>
+        <module>springboot-netty</module>
+        <module>springboot-netty/netty-server</module>
+        <module>springboot-netty/netty-client</module>
     </modules>
 
     <parent>
