@@ -15,6 +15,7 @@ import io.netty.util.AttributeKey;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author admin
@@ -53,7 +54,13 @@ public class NettyClient {
             map.put("age", 12);
             map.put("id", 1);
             map.put("name", "zhangsan");
-            future.channel().writeAndFlush(JSON.toJSONString(map));
+            String dataJson = "{\"name\":\"zhangsan\",";
+            String dataJson2 = "\"age\":123,\"email\":\"hao@122.com\"}";
+            future.channel().writeAndFlush(dataJson);
+            System.out.println("发送一部分JSON数据");
+            TimeUnit.SECONDS.sleep(5);
+            System.out.println("发送剩下一部分JSON数据");
+            future.channel().writeAndFlush(dataJson2);
 
             for (int i = 0; i < 5; i++) {
                 Map<String, Object> dataMap = new HashMap<>();
