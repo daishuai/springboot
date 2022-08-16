@@ -1,6 +1,7 @@
 package com.daishuai.netty.server;
 
 import com.daishuai.netty.server.handler.SimpleServerHandler;
+import com.daishuai.netty.server.initializer.ServerChannelInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -36,16 +37,7 @@ public class NettyServer {
         server.channel(NioServerSocketChannel.class);
 
         // 第三步绑定handler，处理读写事件，ChannelInitializer是给通道初始化
-        server.childHandler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            protected void initChannel(SocketChannel ch) throws Exception {
-                // 解码器，接收到的数据进行解码，一定要加在SimpleServerHandler的上面
-                // delimiter表示分隔符，我们需要先将分隔符写入到ByteBuf中，然后当做参数传入
-                //需要注意的是，netty并没有提供一个DelimiterBasedFrameDecoder对应的编码器实现(笔者没有找到)，因此在发送端需要自行编码添加分隔符，如 \r\n分隔符
-                ch.pipeline().addLast(new JsonObjectDecoder());
-                ch.pipeline().addLast(new SimpleServerHandler());
-            }
-        });
+        server.childHandler(new ServerChannelInitializer());
         // 第四步绑定端口
         try {
             ChannelFuture future = server.bind(8989).sync();

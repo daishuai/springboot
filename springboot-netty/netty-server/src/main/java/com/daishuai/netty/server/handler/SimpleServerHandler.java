@@ -75,7 +75,7 @@ public class SimpleServerHandler extends ChannelInboundHandlerAdapter {
         //可以在这里面写一套类似SpringMVC的框架
         //让SimpleServerHandler不跟任何业务有关，可以封装一套框架
         if(msg instanceof ByteBuf){
-            System.out.println(((ByteBuf)msg).toString(Charset.defaultCharset()));
+            log.info(((ByteBuf)msg).toString(Charset.defaultCharset()));
         }
 
         //业务逻辑代码处理框架。。。

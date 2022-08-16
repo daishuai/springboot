@@ -33,7 +33,6 @@ public class NettyClient {
         client.group(group);
         // 第2步 绑定客户端通道
         client.channel(NioSocketChannel.class);
-
         //第3步 给NIoSocketChannel初始化handler， 处理读写事件
         client.handler(new ChannelInitializer<NioSocketChannel>() {
 
@@ -51,16 +50,10 @@ public class NettyClient {
             ChannelFuture future = client.connect("localhost", 8989).sync();
             //发送数据给服务器
             Map<String, Object> map = new HashMap<>();
-            map.put("age", 12);
-            map.put("id", 1);
-            map.put("name", "zhangsan");
-            String dataJson = "{\"name\":\"zhangsan\",";
-            String dataJson2 = "\"age\":123,\"email\":\"hao@122.com\"}";
-            future.channel().writeAndFlush(dataJson);
-            System.out.println("发送一部分JSON数据");
-            TimeUnit.SECONDS.sleep(5);
-            System.out.println("发送剩下一部分JSON数据");
-            future.channel().writeAndFlush(dataJson2);
+            map.put("id", 12);
+            map.put("type", "messageBus");
+            map.put("content", "zhangsan");
+            future.channel().writeAndFlush(JSON.toJSONString(map));
 
             for (int i = 0; i < 5; i++) {
                 Map<String, Object> dataMap = new HashMap<>();
@@ -72,9 +65,9 @@ public class NettyClient {
             future.channel().closeFuture().sync();
 
             //接收服务端返回的数据
-            AttributeKey<String> key = AttributeKey.valueOf("ServerData");
+           /* AttributeKey<String> key = AttributeKey.valueOf("ServerData");
             Object result = future.channel().attr(key).get();
-            System.out.println(result.toString());
+            System.out.println(result.toString());*/
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
