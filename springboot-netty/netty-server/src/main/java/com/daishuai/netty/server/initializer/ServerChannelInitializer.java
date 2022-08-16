@@ -1,5 +1,6 @@
 package com.daishuai.netty.server.initializer;
 
+import com.daishuai.netty.server.encoder.ObjectEncoder;
 import com.daishuai.netty.server.handler.ServerChannelHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -18,6 +19,7 @@ public class ServerChannelInitializer extends ChannelInitializer<Channel> {
     protected void initChannel(Channel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         // JSON解码器
+        pipeline.addLast(new ObjectEncoder());
         pipeline.addLast(new JsonObjectDecoder());
         pipeline.addLast(new ServerChannelHandler());
     }

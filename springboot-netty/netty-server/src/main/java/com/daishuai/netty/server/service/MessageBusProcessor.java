@@ -30,7 +30,9 @@ public class MessageBusProcessor implements DataProcessor{
         if (ack != null && ack == 1) {
             JSONObject json = new JSONObject();
             json.put("id", messageModel.getId());
-            ctx.channel().writeAndFlush(json.toJSONString());
+            ByteBuf byteBuf = Unpooled.buffer();
+            byteBuf.writeBytes(json.toJSONString().getBytes(StandardCharsets.UTF_8));
+            ctx.channel().writeAndFlush(byteBuf);
         }
     }
 }

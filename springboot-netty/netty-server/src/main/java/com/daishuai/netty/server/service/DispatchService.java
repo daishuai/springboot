@@ -1,10 +1,12 @@
 package com.daishuai.netty.server.service;
 
+import com.alibaba.fastjson.JSON;
 import com.daishuai.netty.server.model.TcpMessageModel;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,7 @@ import java.util.Map;
  * @createTime 2022年08月16日 19:30:00
  */
 @Slf4j
+@Component
 public class DispatchService {
 
     private Map<String, DataProcessor> dataProcessorMap;
@@ -33,6 +36,7 @@ public class DispatchService {
     }
 
     public void dispatch(ChannelHandlerContext ctx, TcpMessageModel messageModel) {
+        log.info("收到客户端的消息: {}", JSON.toJSONString(messageModel));
         String type = messageModel.getType();
         dataProcessorMap.computeIfPresent(type, (s, dataProcessor) -> {
             try {

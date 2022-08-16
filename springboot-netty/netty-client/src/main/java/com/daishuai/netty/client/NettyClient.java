@@ -1,7 +1,7 @@
 package com.daishuai.netty.client;
 
 
-import com.alibaba.fastjson.JSON;
+import com.daishuai.netty.client.encoder.ObjectEncoder;
 import com.daishuai.netty.client.handler.SimpleClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -10,12 +10,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.json.JsonObjectDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.AttributeKey;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author admin
@@ -39,7 +36,7 @@ public class NettyClient {
             @Override
             protected void initChannel(NioSocketChannel ch) throws Exception {
                 //字符串编码器，一定要加在SimpleClientHandler 的上面
-                ch.pipeline().addLast(new StringEncoder());
+                ch.pipeline().addLast(new ObjectEncoder());
                 ch.pipeline().addLast(new JsonObjectDecoder());
                 //找到他的管道 增加他的handler
                 ch.pipeline().addLast(new SimpleClientHandler());
@@ -53,12 +50,13 @@ public class NettyClient {
             map.put("id", 12);
             map.put("type", "messageBus");
             map.put("content", "zhangsan");
-            future.channel().writeAndFlush(JSON.toJSONString(map));
+            map.put("ack", 1);
+            future.channel().writeAndFlush(map);
 
             for (int i = 0; i < 5; i++) {
                 Map<String, Object> dataMap = new HashMap<>();
                 dataMap.put("msg", "hello World!");
-                future.channel().writeAndFlush(JSON.toJSONString(dataMap));
+                future.channel().writeAndFlush(dataMap);
             }
 
             //当通道关闭了，就继续往下走
@@ -68,8 +66,8 @@ public class NettyClient {
            /* AttributeKey<String> key = AttributeKey.valueOf("ServerData");
             Object result = future.channel().attr(key).get();
             System.out.println(result.toString());*/
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.out.println("连接失败");
         }
     }
 }
