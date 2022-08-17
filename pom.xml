@@ -21,6 +21,7 @@
         <module>springboot-netty</module>
         <module>springboot-netty/netty-server</module>
         <module>springboot-netty/netty-client</module>
+        <module>springboot-network-comm</module>
     </modules>
 
     <parent>

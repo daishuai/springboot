@@ -1,0 +1,3 @@
+kem.suite.network-comm.mode: server
+server:
+  port: 8989

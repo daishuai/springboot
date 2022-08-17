@@ -5,12 +5,16 @@ import com.daishuai.netty.client.encoder.ObjectEncoder;
 import com.daishuai.netty.client.handler.SimpleClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.json.JsonObjectDecoder;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +62,12 @@ public class NettyClient {
                 dataMap.put("msg", "hello World!");
                 future.channel().writeAndFlush(dataMap);
             }
-
+            future.addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    System.out.println(future.isSuccess());
+                }
+            });
             //当通道关闭了，就继续往下走
             future.channel().closeFuture().sync();
 
@@ -66,7 +75,7 @@ public class NettyClient {
            /* AttributeKey<String> key = AttributeKey.valueOf("ServerData");
             Object result = future.channel().attr(key).get();
             System.out.println(result.toString());*/
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
             System.out.println("连接失败");
         }
     }
