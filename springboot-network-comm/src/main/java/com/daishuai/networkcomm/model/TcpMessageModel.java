@@ -22,6 +22,11 @@ public class TcpMessageModel {
     private String id;
 
     /**
+     * 客户端id
+     */
+    private String clientId;
+
+    /**
      * 是否需要消息确认，ack=1,需要，否则不需要
      */
     private Integer ack;

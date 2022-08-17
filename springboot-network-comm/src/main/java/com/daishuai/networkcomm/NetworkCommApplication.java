@@ -1,7 +1,9 @@
 package com.daishuai.networkcomm;
 
+import com.daishuai.networkcomm.config.NetworkCommonProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * @author Daishuai
@@ -10,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @createTime 2022年08月17日 16:17:00
  */
 @SpringBootApplication
+@EnableConfigurationProperties(value = {NetworkCommonProperties.class})
 public class NetworkCommApplication {
 
     public static void main(String[] args) {

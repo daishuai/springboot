@@ -1,3 +1,10 @@
-kem.suite.network-comm.mode: client
 server:
   port: 8787
+
+kem:
+  suite:
+    network-comm:
+      mode: client
+      host: localhost
+      port: 9999
+      writeIdleTime: 4

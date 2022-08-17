@@ -1,3 +1,9 @@
-kem.suite.network-comm.mode: server
 server:
   port: 8989
+
+kem:
+  suite:
+    network-comm:
+      mode: server
+      port: 9999
+      readIdleTime: 100

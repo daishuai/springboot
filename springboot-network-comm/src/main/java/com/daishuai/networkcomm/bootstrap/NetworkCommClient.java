@@ -4,7 +4,6 @@ import com.daishuai.networkcomm.encoder.TcpMessageEncoder;
 import com.daishuai.networkcomm.handler.ConnectionWatchDog;
 import com.daishuai.networkcomm.handler.ConnectorIdleStateTrigger;
 import com.daishuai.networkcomm.handler.DefaultChannelHandler;
-import com.daishuai.networkcomm.initializer.TcpClientChannelInitializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -27,23 +26,26 @@ import java.util.concurrent.TimeUnit;
  * @createTime 2022年08月17日 14:00:00
  */
 @Slf4j
-public class NetWorkCommClient implements DisposableBean, InitializingBean {
+public class NetworkCommClient implements DisposableBean, InitializingBean {
 
     private final String host;
 
     private final int port;
 
+    private final long writeIdleTime;
+
     private final EventLoopGroup group;
 
     protected final HashedWheelTimer timer = new HashedWheelTimer();
 
-    public NetWorkCommClient(String host, int port) {
-        this(host, port, null);
+    public NetworkCommClient(String host, int port, long writeIdleTime) {
+        this(host, port, writeIdleTime, null);
     }
 
-    public NetWorkCommClient(String host, int port, EventLoopGroup group) {
+    public NetworkCommClient(String host, int port, long writeIdleTime, EventLoopGroup group) {
         this.host = host;
         this.port = port;
+        this.writeIdleTime = writeIdleTime;
         this.group = group == null ? new NioEventLoopGroup() : group;
     }
 
@@ -57,7 +59,7 @@ public class NetWorkCommClient implements DisposableBean, InitializingBean {
                 return new ChannelHandler[] {
                         this,
                         new LoggingHandler(LogLevel.INFO),
-                        new IdleStateHandler(0 ,5, 0, TimeUnit.SECONDS),
+                        new IdleStateHandler(0 , writeIdleTime, 0, TimeUnit.SECONDS),
                         new ConnectorIdleStateTrigger(),
                         new TcpMessageEncoder(),
                         new JsonObjectDecoder(),

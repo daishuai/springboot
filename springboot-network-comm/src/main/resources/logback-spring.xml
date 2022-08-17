@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false">
+
+    <springProfile name="client">
+        <property name="logging.path" value="log/client/"/>
+        <property name="LOG_LEVEL" value="INFO"/>
+    </springProfile>
+
+    <springProfile name="server">
+        <property name="logging.path" value="log/server/"/>
+        <property name="LOG_LEVEL" value="INFO"/>
+    </springProfile>
+
+
+    <!--应用名称-->
+    <property name="STDOUT_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %boldYellow(%-5level) %cyan(%logger{50}:%L) - %msg%n"/>
+    <property name="APP_NAME" value="network-comm"/>
+    <contextName>${APP_NAME}</contextName>
+
+    <!--输出到控制台日志-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${STDOUT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!--每天记录日志到文件appender-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/log.@build.finalName@.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>7</MaxHistory>
+            <!--单个文件大小-->
+            <MaxFileSize>50MB</MaxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="handler" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${logging.path}/handler.@build.finalName@.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>2</MaxHistory>
+            <!--单个文件大小-->
+            <MaxFileSize>50MB</MaxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.daishuai.networkcomm" level="info" additivity="true">
+        <appender-ref ref="file" />
+    </logger>
+
+    <logger name="io.netty.handler.logging.LoggingHandler" level="info" additivity="true">
+        <appender-ref ref="handler" />
+    </logger>
+
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+    </root>
+</configuration>

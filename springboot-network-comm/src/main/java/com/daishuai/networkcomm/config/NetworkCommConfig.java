@@ -1,10 +1,12 @@
 package com.daishuai.networkcomm.config;
 
-import com.daishuai.networkcomm.bootstrap.NetWorkCommClient;
+import com.daishuai.networkcomm.bootstrap.NetworkCommClient;
 import com.daishuai.networkcomm.bootstrap.NetworkCommServer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.annotation.Resource;
 
 /**
  * @author Daishuai
@@ -15,16 +17,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class NetworkCommConfig {
 
+    @Resource
+    private NetworkCommonProperties properties;
 
     @Bean
     @ConditionalOnProperty(name = "kem.suite.network-comm.mode", havingValue = "server")
     public NetworkCommServer networkCommServer() {
-        return new NetworkCommServer(8889);
+        return new NetworkCommServer(properties.getPort(), properties.getReadIdleTime());
     }
 
     @Bean
     @ConditionalOnProperty(name = "kem.suite.network-comm.mode", havingValue = "client")
-    public NetWorkCommClient netWorkCommClient() {
-        return new NetWorkCommClient("localhost", 8889);
+    public NetworkCommClient netWorkCommClient() {
+        return new NetworkCommClient(properties.getHost(), properties.getPort(), properties.getWriteIdleTime());
     }
 }

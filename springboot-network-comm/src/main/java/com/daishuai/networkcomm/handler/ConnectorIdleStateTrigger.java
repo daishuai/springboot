@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class ConnectorIdleStateTrigger extends ChannelInboundHandlerAdapter {
 
-    private static final ByteBuf HEARTBEAT_SEQUENCE = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer("{\"type\":\"heartbeat\"}", StandardCharsets.UTF_8));
+    private static final ByteBuf HEARTBEAT_SEQUENCE = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer("{\"type1\":\"heartbeat\"}", StandardCharsets.UTF_8));
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof IdleStateEvent) {

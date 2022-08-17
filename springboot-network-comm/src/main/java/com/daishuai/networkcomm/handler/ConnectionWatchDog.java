@@ -1,6 +1,5 @@
 package com.daishuai.networkcomm.handler;
 
-import com.daishuai.networkcomm.initializer.TcpClientChannelInitializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.util.Timeout;
