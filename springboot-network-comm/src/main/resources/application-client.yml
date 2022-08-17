@@ -7,4 +7,4 @@ kem:
       mode: client
       host: localhost
       port: 9999
-      writeIdleTime: 4
+      writeIdleTime: 0

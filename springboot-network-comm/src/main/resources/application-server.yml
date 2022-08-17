@@ -6,4 +6,4 @@ kem:
     network-comm:
       mode: server
       port: 9999
-      readIdleTime: 100
+      readIdleTime: 0

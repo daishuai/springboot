@@ -43,6 +43,9 @@ public class DefaultChannelHandler extends ChannelInboundHandlerAdapter {
         Channel channel = ctx.channel();
         String channelId = channel.id().asLongText();
         NettySession session = CommCache.CHANNEL_MAP.get(channelId);
+        if (session == null) {
+            return;
+        }
         String clientId = session.getClientId();
         if (StringUtils.isNotBlank(clientId)) {
             CommCache.CLIENT_MAP.remove(clientId);
