@@ -1,0 +1,5 @@
+spring:
+  mvc:
+    static-path-pattern: /resource/file/**
+  resources:
+    static-locations: file:D:/data/private
