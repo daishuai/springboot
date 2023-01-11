@@ -1,7 +1,10 @@
 package com.daishuai.validator.controller;
 
+import com.daishuai.validator.dto.UserInfoDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * @author Daishuai
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ValidatorController {
 
-    public ResponseEntity<String> validator() {
+    public ResponseEntity<String> validator(@Valid UserInfoDto userInfoDto) {
 
         return ResponseEntity.ok("ok");
     }
