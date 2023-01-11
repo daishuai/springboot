@@ -24,6 +24,11 @@ public class DemoController {
 
         simpleProducer.send("topic1", "Hello Kafka, Welcome To Our World!");
 
+
+
+
+
+
         return ResponseEntity.success();
     }
 }
