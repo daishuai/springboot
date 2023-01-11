@@ -23,6 +23,7 @@
         <module>springboot-netty/netty-client</module>
         <module>springboot-network-comm</module>
         <module>springboot-resource</module>
+        <module>springboot-validator</module>
     </modules>
 
     <parent>
