@@ -2,6 +2,7 @@ package com.daishuai.kafka.controller;
 
 import com.daishuai.common.entity.ResponseEntity;
 import com.daishuai.kafka.producer.SimpleProducer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description 测试用例
  * @date 2019/6/15 19:05
  */
+@Slf4j
 @RequestMapping("/kafka")
 @RestController
 public class DemoController {
@@ -22,13 +24,8 @@ public class DemoController {
     @GetMapping("/send")
     public ResponseEntity sendMessage() {
 
+        log.info("send data to kafka");
         simpleProducer.send("topic1", "Hello Kafka, Welcome To Our World!");
-
-
-
-
-
-
         return ResponseEntity.success();
     }
 }
