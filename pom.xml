@@ -24,12 +24,13 @@
         <module>springboot-network-comm</module>
         <module>springboot-resource</module>
         <module>springboot-validator</module>
+        <module>feign-file</module>
     </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.19.RELEASE</version>
+        <version>1.5.14.RELEASE</version>
     </parent>
 
     <properties>
