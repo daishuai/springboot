@@ -1,16 +1,9 @@
 server:
   port: 9999
-  ##两个不一样 接口前缀 context-path + servlet-path，静态资源前缀 context-path + servlet-path或者servlet-path，apache的WebSocket context-path
-  ##两个一样 接口前缀 context-path + servlet-path，静态资源前缀 context-path + servlet-path，apache的WebSocket context-path
-  context-path: /kircp
-  servlet-path: /kircp
+
 spring:
-  resources:
-    static-locations: classpath:/META-INF/resources,classpath:/resources/,classpath:/static/,classpath:/public/,/,file:D://demo
-  mvc:
-    static-path-pattern: /resources/**
-
-demo:
-  property:
-    interval: 60
-
+  datasource: #数据库配置 根据实际数据库地址修改
+    url: jdbc:mysql://10.165.78.7:24410/dev_smartmedia?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: dev_smartmedia #(变动)
+    password: xiaofang119# #(变动)
+    driver-class-name: com.mysql.jdbc.Driver
