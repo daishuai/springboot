@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * @author Keda
+ * @author Tom
  * @version 1.0.0
  * @description TODO
  * @createTime 2023年08月30日 14:50:00
@@ -38,7 +38,7 @@ public class FeignApplication {
 
     @GetMapping(value = "/upload")
     public Object upload() throws IOException {
-        URL url = new URL("https://keda119.kedacom.com/ers-outside-iacs-dev/outside-server/resource/file/default/2023-08-30/b2d67b42b77845a89d8343f1979f73a3.jpg");
+        URL url = new URL("");
         byte[] body = IOUtils.toByteArray(url);
         // MultipartFile, name必须和上传文件接口参数名称保持一致
         MultipartFile file = new MockMultipartFile("file", "a.jpg", ContentType.IMAGE_JPEG.getMimeType(), body);

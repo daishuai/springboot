@@ -7,12 +7,7 @@ spring:
     username: root #(变动)
     password: root# #(变动)
     driver-class-name: com.mysql.jdbc.Driver
-
-  redis: #redis配置 外设服务 - 根据环境申请(已申请)
-    host: localhost    #(变动)
-    password: 123456 #(变动)
-    port: 6379 #(变动)
 demo:
-  url: jdbc:mysql://localhost:3306
+  url: jdbc:mysql://192.168.1.1:3306
   username: root
-  password: root
+  password: tomcat
