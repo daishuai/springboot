@@ -13,7 +13,13 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Tom
@@ -48,4 +54,6 @@ public class DemoJob implements SchedulingConfigurer {
         };
         scheduledTaskRegistrar.addTriggerTask(task, trigger);
     }
+
+
 }
