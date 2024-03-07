@@ -25,7 +25,7 @@
         <module>springboot-resource</module>
         <module>springboot-validator</module>
         <module>feign-file</module>
-        <module>sppringboot-docker</module>
+        <module>docker-jar</module>
         <module>docker-tomcat</module>
     </modules>
 
