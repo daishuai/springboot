@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WebSocket Stomp Receiving Example</title>
+</head>
+<body>
+<div>
+    <div>
+        <div>
+            <button id="connect" onclick="connect();">Connect</button>
+            <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+        </div>
+        <div id="conversationDiv">
+            <p>
+                <label>userId 1 notice content?</label>
+            </p>
+            <p>
+                <label for="name"></label><textarea id="name" rows="5"></textarea>
+            </p>
+            <button id="sendTo" onclick="sendTo();">sendTo</button>
+            <p id="response"></p>
+        </div>
+    </div>
+</div>
+<div>
+    <h3>Messages:</h3>
+    <ol id="messages"></ol>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/crypto-js/4.0.0/crypto-js.js"></script>
+<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="../sockjs.min.js"></script>
+<script type="text/javascript" src="../jsencrypt.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script type="text/javascript">
+    const messageList = $("#messages");
+    let stompClient = null;
+    // 重试次数
+    const tryTimes = 0;
+
+    function setConnected(connected) {
+        document.getElementById('connect').disabled = connected;
+        document.getElementById('disconnect').disabled = !connected;
+        document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
+        document.getElementById('response').innerHTML = '';
+    }
+
+    const subscribeTopic = '/user/voice/zhangsan'
+    const sendTopic = '/ws/app/voice/zhangsan'
+    // 开启socket连接
+    function connect() {
+        const socket = new SockJS('http://47.121.30.131:8989/ws/stomp');
+        stompClient = Stomp.over(socket);
+        // stompClient.connect(headers, connectCallback, errorCallback);
+        // 设置心跳
+        stompClient.heartbeat.outgoing = 5000;
+        stompClient.heartbeat.incoming = 5000;
+        stompClient.connect({
+        }, function (frame) {
+            setConnected(true)
+            subscribe()
+            register()
+        }, errorCallback => {
+            console.log('=============error==============' + errorCallback);
+            reconnect()
+        });
+    }
+
+    function reconnect() {
+        if (tryTimes > 10) {
+            console.log('重试次数已达上限')
+            return;
+        }
+        setTimeout(() => connect(), 3000);
+    }
+
+    function register() {
+        const data = {
+            msgType: 0
+        }
+        stompClient.send(sendTopic, {}, JSON.stringify(data))
+    }
+
+    function unregister() {
+        const data = {
+            msgType: 8
+        }
+        stompClient.send(sendTopic, {}, JSON.stringify(data))
+    }
+
+    // 断开socket连接
+    function disconnect() {
+        if (stompClient != null) {
+            unregister()
+            stompClient.disconnect(function (frame) {
+                setConnected(false);
+            }, {"userId": "userIdTest", "onDisconnectTopic": "/topic", "clientId": "kem_frontline"});
+        }
+        console.log("Disconnected");
+    }
+
+    // send to server
+    function sendTo() {
+        const data = {
+            msgType: 1,
+            callDeviceId: 'zhangsan',
+            callName: '张三',
+            replyDeviceId: 'lisi',
+            replyName: '李四'
+        }
+        stompClient.send(sendTopic, {}, JSON.stringify(data))
+    }
+
+    // subscribe
+    // 客户端订阅的时候需要将参数传给服务器，key值为"param"，value为JsonString
+    function subscribe() {
+        console.log("subscribe");
+        const params = {
+            businessType: 'countByRunningStatus',
+            departmentCode: '9b19ab64f84a461fb14eef9d8bd9783a',
+            runningStatus: '03'
+        }
+        stompClient.subscribe(subscribeTopic, function (data) {
+            const message = data.body;
+            const rt = {
+                messageId: data.headers.messageId
+            }
+            messageList.append("<li>" + 'subscribe' + message + "</li>");
+            data.ack(rt);
+        }, {'params': JSON.stringify(params)});
+    }
+</script>
+</body>
+</html>

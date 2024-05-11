@@ -7,7 +7,7 @@
     <groupId>com.daishuai</groupId>
     <artifactId>springboot</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-RELEASE</version>
     <modules>
         <module>springboot-redis</module>
         <module>springboot-kafka</module>
@@ -41,7 +41,7 @@
         <java.version>1.8</java.version>
         <fastjson.version>1.2.83</fastjson.version>
         <commons-lang3.version>3.7</commons-lang3.version>
-        <project.version>1.0.0-SNAPSHOT</project.version>
+        <project.version>1.0.0-RELEASE</project.version>
         <elasticsearch.version>6.8.0</elasticsearch.version>
         <spring.cloud-version>Edgware.SR5</spring.cloud-version>
     </properties>
