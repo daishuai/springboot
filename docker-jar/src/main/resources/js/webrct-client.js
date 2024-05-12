@@ -240,7 +240,8 @@ function onMessage(message) {
                 // 正在通话中
             } else {
                 // 接收通话请求
-                startCall(false, message.callDeviceId)
+                replierId = message.callDeviceId
+                startCall(false, replierId)
                 isBusy = true
             }
             break
