@@ -165,8 +165,7 @@ function handleCandidate(data) {
 }
 
 // 呼叫
-async function startCall(isInitiator) {
-    replierId = inputReplyId.value
+async function startCall(isInitiator, replierId) {
     if (replierId === '') {
         alert('被呼叫人的ID不能为空')
         return
@@ -241,7 +240,7 @@ function onMessage(message) {
                 // 正在通话中
             } else {
                 // 接收通话请求
-                startCall(false)
+                startCall(false, message.callDeviceId)
                 isBusy = true
             }
             break
@@ -323,7 +322,7 @@ function disconnect() {
 function subscribe() {
     console.log("subscribe");
     stompClient.subscribe(subscribeTopicPrefix + callerId, function (data) {
-        const message = data.body;
+        const message = JSON.parse(data.body)
         onMessage(message)
     }, {})
 }
@@ -340,7 +339,8 @@ loginButton.onclick = () => {
 
 callButton.onclick = () => {
     if (callButton.textContent === '呼叫') {
-        startCall(true)
+        replierId = inputReplyId.value
+        startCall(true, replierId)
     } else if (callButton.textContent === '挂断') {
         endCall()
     } else {
