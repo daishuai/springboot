@@ -67,7 +67,7 @@ function sendToSignalServer(msgType, customData) {
     const data = {
         msgType: msgType,
         callDeviceId: callerId,
-        replyId: replierId,
+        replyDeviceId: replierId,
         iceCandidate: customData
     }
     stompClient.send(sendTopicPrefix + callerId, {}, JSON.stringify(data))
