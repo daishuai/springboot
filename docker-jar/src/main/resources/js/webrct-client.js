@@ -41,8 +41,8 @@ const iceConfig = {
     ]
 }
 
-const subscribeTopic = '/user/voice/zhangsan'
-const sendTopic = '/ws/app/voice/zhangsan'
+const subscribeTopicPrefix = '/user/voice/'
+const sendTopicPrefix = '/ws/app/voice/'
 
 // 登录
 function login() {
@@ -70,7 +70,7 @@ function sendToSignalServer(msgType, customData) {
         replyId: replierId,
         iceCandidate: customData
     }
-    stompClient.send(sendTopic, {}, JSON.stringify(data))
+    stompClient.send(sendTopicPrefix + callerId, {}, JSON.stringify(data))
 }
 
 function createRtcPeerConnection() {
@@ -299,14 +299,14 @@ function register() {
     const data = {
         msgType: 0
     }
-    stompClient.send(sendTopic, {}, JSON.stringify(data))
+    stompClient.send(sendTopicPrefix + callerId, {}, JSON.stringify(data))
 }
 
 function unregister() {
     const data = {
         msgType: 8
     }
-    stompClient.send(sendTopic, {}, JSON.stringify(data))
+    stompClient.send(sendTopicPrefix + callerId, {}, JSON.stringify(data))
 }
 
 // 断开socket连接
@@ -322,7 +322,7 @@ function disconnect() {
 // subscribe
 function subscribe() {
     console.log("subscribe");
-    stompClient.subscribe(subscribeTopic, function (data) {
+    stompClient.subscribe(subscribeTopicPrefix + callerId, function (data) {
         const message = data.body;
         onMessage(message)
     }, {})
