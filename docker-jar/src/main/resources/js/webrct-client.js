@@ -100,7 +100,7 @@ function createRtcPeerConnection() {
     }
 }
 
-function getLocalMediaStream() {
+async function getLocalMediaStream() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
         console.log('GetUserMedia is not supported!')
         return null
@@ -165,14 +165,14 @@ function handleCandidate(data) {
 }
 
 // 呼叫
-function startCall(isInitiator) {
+async function startCall(isInitiator) {
     replierId = inputReplyId.value
     if (replierId === '') {
         alert('被呼叫人的ID不能为空')
         return
     }
     createRtcPeerConnection()
-    localStream = getLocalMediaStream()
+    localStream = await getLocalMediaStream()
     attachMediaStreamToLocalVideo()
     attachMediaStreamToPeerConnection()
     sendToSignalServer(1, null)
@@ -276,7 +276,6 @@ function connect() {
     stompClient.connect({}, function (frame) {
         console.log('Connect signal server success')
         loginButton.textContent = '登出'
-        setConnected(true)
         // 订阅消息
         subscribe()
         // 注册
