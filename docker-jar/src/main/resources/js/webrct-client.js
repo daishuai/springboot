@@ -340,7 +340,7 @@ loginButton.onclick = () => {
 
 callButton.onclick = () => {
     if (callButton.textContent === '呼叫') {
-        startCall()
+        startCall(true)
     } else if (callButton.textContent === '挂断') {
         endCall()
     } else {
