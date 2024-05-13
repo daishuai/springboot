@@ -186,13 +186,17 @@ async function startCall(isInitiator, replierId) {
 }
 
 // 挂断
-function endCall() {
+function endCall(isInitiator) {
+    callButton.textContent = '呼叫'
     closeLocalMediaStream()
     closeRtcPeerConnection()
     localVideo.style.display = 'none'
     remoteVideo.style.display = 'none'
     remoteStream = null
     replierId = null
+    if (isInitiator) {
+        sendToSignalServer(6)
+    }
 }
 
 // 媒体协商
@@ -249,6 +253,7 @@ function onMessage(message) {
         case 2:
             // 对方接收通话请求
             createOffer()
+            callButton.textContent = '挂断'
             break
         case 3:
             // 网络协商
@@ -261,6 +266,12 @@ function onMessage(message) {
         case 5:
             // 媒体协商Offer
             handleAnswerSdp(message.iceCandidate.sdp)
+            break
+        case  6:
+            // 挂断
+            if (replierId === message.callDeviceId) {
+                endCall(false)
+            }
             break
     }
 
@@ -344,7 +355,7 @@ callButton.onclick = () => {
         replierId = inputReplyId.value
         startCall(true, replierId)
     } else if (callButton.textContent === '挂断') {
-        endCall()
+        endCall(true)
     } else {
         alert('未知操作')
     }
