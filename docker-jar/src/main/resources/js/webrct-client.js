@@ -94,9 +94,10 @@ function createRtcPeerConnection() {
     rtcPeerConnection.ontrack = (event) => {
         if (remoteStream === null) {
             remoteStream = new MediaStream()
-            remoteVideo.srcObject = remoteVideo
+            remoteVideo.srcObject = remoteStream
             remoteVideo.style.display = 'inline-block'
         }
+        remoteStream.addTrack(event.track)
     }
 }
 
@@ -145,7 +146,7 @@ function closeRtcPeerConnection() {
 }
 
 function handleOfferSdp(data) {
-    rtcPeerConnection.setRemoteDescription(new RTCPeerConnection(data))
+    rtcPeerConnection.setRemoteDescription(new RTCSessionDescription(data))
         .then(() => {
             createAnswer()
         })
