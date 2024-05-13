@@ -251,7 +251,7 @@ function onMessage(message) {
             break
         case 3:
             // 网络协商
-            handleCandidate()
+            handleCandidate(message.iceCandidate.candidate)
             break
         case 4:
             // 媒体协商Offer
