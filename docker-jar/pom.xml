@@ -54,7 +54,7 @@
                         <imageTag>latest</imageTag>
                     </imageTags>
                     <dockerDirectory>${project.basedir}</dockerDirectory><!--Dockerfile所在的目录-->
-                    <dockerHost>http://47.121.30.131:2375</dockerHost><!--docker所在的宿主机地址,或者填写http://yourip:2375-->
+                    <dockerHost>http://192.168.220.128:2375</dockerHost><!--docker所在的宿主机地址,或者填写http://yourip:2375-->
                     <resources>
                         <resource><!--这里配置的就是打包后jar所在的位置-->
                             <targetPath>/</targetPath>

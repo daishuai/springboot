@@ -31,12 +31,12 @@ const tryTimes = 0
 const iceConfig = {
     iceServers: [
         {
-            urls: 'stun:47.121.30.131:3478'
+            urls: 'stun:192.168.220.128:3478'
         },
         {
-            urls: 'turn:47.121.30.131:3478',
-            username: 'username1',
-            credential: 'password1'
+            urls: 'turn:192.168.220.128:3478',
+            username: 'admin',
+            credential: '123456'
         }
     ]
 }
@@ -279,7 +279,7 @@ function onMessage(message) {
 
 // 开启socket连接
 function connect() {
-    const socket = new SockJS('http://47.121.30.131:8989/ws/stomp');
+    const socket = new SockJS('http://192.168.220.128:8989/ws/stomp');
     stompClient = Stomp.over(socket);
     // stompClient.connect(headers, connectCallback, errorCallback);
     // 设置心跳
