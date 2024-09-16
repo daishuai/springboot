@@ -1,6 +1,11 @@
 #这是基础镜像
 
-FROM docker.io/java:8
+FROM openjdk:8
+
+# 解决容器内时区不一致问题
+ENV TZ=Asia/Shanghai
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 VOLUME /tmp
 
